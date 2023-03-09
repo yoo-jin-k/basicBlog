@@ -53,13 +53,13 @@
 					action="${pageContext.request.contextPath}/user/doLogin">
 
 					<div class="input-group">
-						<span class="input-group-text">아이디</span> <input type="text"
+						<span class="input-group-text">ID</span> <input type="text"
 							name="id" id="id" required="required" class="form-control"
 							placeholder="Username">
 					</div>
 
 					<div class="input-group">
-						<span class="input-group-text">패스워드</span> <input type="password"
+						<span class="input-group-text">PW</span> <input type="password"
 							name="password" id="password" required="required"
 							class="form-control" placeholder="password">
 					</div>
@@ -87,8 +87,8 @@
 					</c:if> --%>
 
 					<button class="btn btn-primary" type="submit" value="로그인" style="margin-bottom:15px;">
-						로그인</button>
-						<button type="button" class="btn btn-primary"><a href="/basicBlog/user/joinForm">회원가입</a></button>
+						Login</button>
+						<button type="button" class="btn btn-primary"><a href="/basicBlog/user/joinForm">Join</a></button>
 
 				</form>
 			</div>

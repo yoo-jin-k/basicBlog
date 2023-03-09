@@ -64,26 +64,19 @@
 
 				<form class="search-form">
 					<div class="search_box1">
-  						<input type="text" name="keyword" id="floatingInput" placeholder="검">
+  						<input type="text" name="keyword" id="floatingInput" placeholder="Search">
   					
 					<button class="btn btn-primary" type="submit" value="검색">
-						검색
+						Search
 					</button>
 					</div>
 					<div class="search_box2">
-					<input type="radio" name="which" value="blog-title"> <label>블로그
+					<!-- <input type="radio" name="which" value="blog-title"> <label>블로그
 							제목</label> <input type="radio" name="which" value="blog-user"> <label>블로거</label>
-					</div>
+					</div> -->
 					
 					
-					<!-- <fieldset>
-						<input type="text" name="keyword" /> <input type="submit"
-							value="검색" />
-					</fieldset> -->
-					<!-- <fieldset>
-						<input type="radio" name="which" value="blog-title"> <label>블로그
-							제목</label> <input type="radio" name="which" value="blog-user"> <label>블로거</label>
-					</fieldset> -->
+					
 				</form>
 			</div>
 		</div>

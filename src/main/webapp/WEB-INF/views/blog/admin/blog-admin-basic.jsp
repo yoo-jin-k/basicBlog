@@ -55,10 +55,11 @@
 		$("#input_img").on("change", handleImgFileSelect);
 
 		//e : change 이벤트 객체
-		// change 이벤트 설정하면  e는 이벤트가 된다. handleImgFileSelect에 파라미터 주면 e가 이벤트가 아니라 그냥 파라미터가 됨.
+		// change 이벤트 설정하면  e는 이벤트가 된다. 
+		// handleImgFileSelect에 파라미터 주면 e가 이벤트가 아니라 그냥 파라미터가 됨.
 		function handleImgFileSelect(e) {
 
-			console.log("여길봐라: " + JSON.stringify(e));
+			console.log("여기: " + JSON.stringify(e));
 			//e.target : 파일객체
 			//e.target.files : 파일객체 안의 파일들
 			var files = e.target.files;
@@ -120,7 +121,6 @@
 				<a href="/basicBlog/main">
 					<h1 class="logo">Basic Blog</h1>
 				</a>
-
 				<div class="blog_box">
 					<!-- 블로그 해더 -->
 					<div id="header">
@@ -183,8 +183,10 @@
 															src="${pageContext.request.contextPath}/assets/images/basicblog_setting.jpg">
 													</c:when>
 													<c:otherwise>
-														<img
-															src="${pageContext.request.contextPath}/assets/upload/${basic.logoFile}">
+													<img
+															src="${pageContext.request.contextPath}/assets/images/basicblog_setting.jpg">
+														<%-- <img
+															src="${pageContext.request.contextPath}/assets/upload/${basic.logoFile}"> --%>
 													</c:otherwise>
 												</c:choose></td>
 										</tr>
@@ -203,7 +205,6 @@
 											</td>
 										</tr>
 									</table>
-
 									<!-- 
 			      	<h3>ajax test</h3>
 			      	<div class="uploadDiv">
@@ -213,12 +214,10 @@
 					<button id="uploadBtn">Upload</button>
 					<div class="img_wrap"></div> -->
 
-
 								</form>
 							</div>
 						</div>
 					</div>
-
 					<!-- 푸터-->
 					<div id="footer">
 						<p>

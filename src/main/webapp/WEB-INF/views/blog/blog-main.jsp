@@ -74,12 +74,16 @@
 										success : function(res) {
 											$("#showPost").empty(); // 해결!
 											var results = res;
-											var str = '<h4 id="resultPostTitle">'
+											var str = '<div class="card">'
+													+ '<div class="card-body">'
+													+ '<h5 class="card-title" id="resultPostTitle">'
 													+ results.postTitle
-													+ '</h4>';
-											str += '<p id="resultPostContent">'
+													+ '</h5>'
+													+ '<p class="card-text" id="resultPostContent">'
 													+ results.postContent
-													+ '</p>';
+													+ '</p>'
+													+ '</div>'
+													+ '</div>';
 											$("#showPost").append(str);
 										},
 										error : function(xhr, error) { //xmlHttpRequest?
@@ -115,7 +119,7 @@
 											"userNo" : userNo
 										}),
 										success : function(res) {
-											$(".blog-list").empty(); // 해결!
+											$(".blog-list").empty();
 											var results = res;
 											var str = '<ul>';
 											$
@@ -161,6 +165,7 @@
 						<h1>
 							<a href="/basicBlog/${userVo.id}">${basic.blogTitle}님의 블로그</a>
 						</h1>
+						<%-- <c:import url='/WEB-INF/views/include/blog_header.jsp' /> --%>
 						<ul class="blog_menu">
 							<c:choose>
 								<c:when test='${empty authUser}'>
@@ -179,41 +184,62 @@
 									<c:choose>
 										<c:when test="${authUser.id eq userVo.id}">
 											<li><button type="button" class="btn btn-primary">
-											<a href="/basicBlog/${authUser.id}/admin/basic">내블로그
-													관리</a></button></li>
+													<a href="/basicBlog/${authUser.id}/admin/basic">내블로그 관리</a>
+												</button></li>
 										</c:when>
 									</c:choose>
-									<li><button type="button" class="btn btn-primary"><a href="/basicBlog/user/logout">로그아웃</a></button></li>
+									<li><button type="button" class="btn btn-primary">
+											<a href="/basicBlog/user/logout">로그아웃</a>
+										</button></li>
 								</c:otherwise>
 							</c:choose>
 						</ul>
 					</div>
 
-
-
-
-
-
 					<div class="blog_info">
-
 						<div id="wrapper">
 							<div id="content">
 								<!-- 최신의 게시글 표출 -->
 								<div class="blog-content" id="lastPost">
-									<h4>${lastPostVo.postTitle}</h4>
+									<div class="card" >
+										<div class="card-body">
+											<h5 class="card-title">${lastPostVo.postTitle}</h5>
+
+											<p class="card-text">${lastPostVo.postContent}</p>
+
+										</div>
+									</div>
+									<%-- <h4>${lastPostVo.postTitle}</h4>
 									<p>
 										${lastPostVo.postContent}<br>
-									</p>
+									</p> --%>
 								</div>
 								<!-- 선택한 게시글의 내용 표출 -->
 								<div class="blog-content" id="showPost">
-									<h4 id="resultPostTitle"></h4>
-									<p id="resultPostContent"></p>
+								<div class="card">
+										<div class="card-body">
+											<h5 class="card-title" id="resultPostTitle"></h5>
+
+											<p class="card-text" id="resultPostContent"></p>
+
+										</div>
+									</div>
+									
+									
+
+
+<!-- 
+									<div>
+										<h4 id="resultPostTitle"></h4>
+									</div>
+									<div>
+										<p id="resultPostContent"></p>
+									</div> -->
+
 								</div>
 
 								<!-- 작성된 게시글리스트 표출 -->
-								<ul class="blog-list"
-									style="border-color: #eeeeee; border-style: solid;">
+								<ul class="blog-list">
 									<c:choose>
 										<c:when test='${empty postVo}'>
 											<p>등록된 글이 없습니다.</p>
@@ -229,41 +255,43 @@
 								</ul>
 							</div>
 						</div>
-						
+
 						<div class="blog_side">
-						<div id="extra">
-							<div class="blog-logo">
-								<c:choose>
-									<c:when
-										test="${basic.logoFile eq 'notExist' || empty basic.logoFile}">
-										<img
-											src="${pageContext.request.contextPath}/assets/images/basicblog_setting.jpg">
-									</c:when>
-									<c:otherwise>
-										<img
-											src="${pageContext.request.contextPath}/assets/upload/${basic.logoFile}">
-									</c:otherwise>
-								</c:choose>
+							<div id="extra">
+								<div class="blog-logo">
+									<c:choose>
+										<c:when
+											test="${basic.logoFile eq 'notExist' || empty basic.logoFile}">
+											<img
+												src="${pageContext.request.contextPath}/assets/images/basicblog_setting.jpg">
+										</c:when>
+										<c:otherwise>
+											<%-- <img
+												src="${pageContext.request.contextPath}/assets/upload/${basic.logoFile}"> --%>
+											<img
+												src="${pageContext.request.contextPath}/assets/images/basicblog_setting.jpg">
+										</c:otherwise>
+									</c:choose>
+								</div>
+							</div>
+
+
+							<div id="navigation">
+								<h2>카테고리</h2>
+								<ul>
+									<c:forEach items="${categoryVo}" var="categoryVo"
+										varStatus="status">
+										<li><a id="cateName">${categoryVo.cateName}</a> <input
+											type="hidden" id="cateNo" value="${categoryVo.cateNo}">
+										</li>
+									</c:forEach>
+								</ul>
 							</div>
 						</div>
 
 
-						<div id="navigation">
-							<h2>카테고리</h2>
-							<ul>
-								<c:forEach items="${categoryVo}" var="categoryVo"
-									varStatus="status">
-									<li><a id="cateName">${categoryVo.cateName}</a> <input
-										type="hidden" id="cateNo" value="${categoryVo.cateNo}">
-									</li>
-								</c:forEach>
-							</ul>
-						</div>
-						</div>
 
 
-
-						
 					</div>
 
 					<!-- 푸터-->
@@ -272,14 +300,7 @@
 							<strong>Spring 이야기</strong> is powered by basicBlog (c)2023
 						</p>
 					</div>
-
-
-
 				</div>
-
-
-
-
 			</div>
 		</div>
 	</div>

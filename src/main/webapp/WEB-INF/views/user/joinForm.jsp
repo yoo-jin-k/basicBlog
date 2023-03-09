@@ -155,7 +155,7 @@
 				<ul class="menu">
 					<!-- 로그인 전 메뉴 -->
 					<button type="button" class="btn btn-primary">
-						<a href="/basicBlog/user/loginForm">로그인</a>
+						<a href="/basicBlog/user/loginForm">Login</a>
 					</button>
 
 				</ul>
@@ -163,7 +163,7 @@
 				<form class="join-form" id="join-form" method="post"
 					action="${pageContext.servletContext.contextPath}/user/doJoin">
 					<div class="input-group">
-						<span class="input-group-text" for="name">이름</span> <input
+						<span class="input-group-text" for="name">Name</span> <input
 							type="text" name="userName" id="userName" value=""
 							required="required" class="form-control" placeholder="userName">
 					</div>
@@ -174,7 +174,7 @@
 								<span class="input-group-text" for="id">ID</span>
 								<input
 									type="text" name="id" id="id" value="" required="required"
-									class="form-control">
+									class="form-control" placeholder="id">
 							</div>
 
 							<p id="checkid-msg" class="form-error">&nbsp;</p>
@@ -182,7 +182,7 @@
 							
 							<div>
 								<button class="btn btn-primary" id="btn-checkid" type="button"
-									value="id 중복체크">체크</button>
+									value="id 중복체크">Check</button>
 							</div>
 
 
@@ -200,7 +200,7 @@
 					</div>
 					<div>
 						<button type="button" id="btn-join" onclick="joinCheck()"
-							class="btn btn-primary">가입하기</button>
+							class="btn btn-primary">Join</button>
 					</div>
 
 
