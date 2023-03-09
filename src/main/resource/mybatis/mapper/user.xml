@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+
+	<!-- 회원가입 -->
+	<insert id="join" parameterType="uservo">
+		insert into users(userNo, id, userName, password, joinDate)
+		values (seq_users_no.nextval, #{id}, #{userName}, #{password}, sysdate)
+	</insert>
+
+	<!-- 아이디 중복확인 -->
+	<select id="checkId" parameterType="string" resultType="_int"> 
+	<![CDATA[
+		SELECT count(*)
+		FROM USERS 
+		WHERE ID = #{id}
+	]]>
+	</select>
+
+	<!-- 로그인 개수 -->
+	<select id="doLoginCnt" parameterType="uservo" resultType="_int"> 
+	<![CDATA[
+		SELECT count(*)
+		FROM USERS 
+		WHERE ID = #{id} and password = #{password}
+	]]>
+	</select>
+	
+	<!-- 로그인 -->
+	<select id="doLogin" parameterType="string" resultType="uservo"> 
+	<![CDATA[
+		SELECT userNo, id, password, userName
+		FROM USERS 
+		WHERE ID = #{id} and password = #{password}
+	]]>
+	</select>
+	
+	<!-- 회원가입 정보를 blog테이블에도 넣기 -->
+	<insert id="createBlog" parameterType="uservo"> 
+	<![CDATA[
+		INSERT INTO blog(userNo, blogTitle)
+		VALUES((SELECT USERNO FROM USERS u WHERE id = #{id}), #{id})
+	]]>
+	</insert>
+	
+	<!-- id에 맞는 userNo가져오기 -->
+	<select id="getUserNo" parameterType="string" resultType="uservo"> 
+	<![CDATA[
+		SELECT userNo, userName, id
+		FROM USERS 
+		WHERE ID = #{id}
+	]]>
+	</select>
+	
+	<!-- userNo에 맞는 id가져오기 -->
+	<select id="getId" parameterType="_int" resultType="string"> 
+	<![CDATA[
+		SELECT id
+		FROM USERS 
+		WHERE userNo = #{userNo}
+	]]>
+	</select>
+	
+</mapper>

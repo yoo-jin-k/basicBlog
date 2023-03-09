@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blogAdmin">
+	<!-- 내블로그 관리페이지 데이터가져오기 -->
+	<select id="getData" parameterType="_int" resultType="blogvo">
+	<![CDATA[
+		SELECT blogTitle, logoFile
+		FROM blog 
+		WHERE userNo = #{userNo}
+	]]>
+	</select>
+	
+	<!-- 내블로그 관리페이지 > 기본설정변경버튼 -->
+	<update id="blogSetting" parameterType="blogvo">
+	<![CDATA[
+		UPDATE BLOG 
+		SET BLOGTITLE = #{blogTitle}
+			,LOGOFILE = #{logoFile}
+		WHERE userNo = #{userNo}
+	]]>
+	</update>
+	
+	<!-- 카테고리 데이터가져오기 -->
+	<select id="getCateData" parameterType="_int" resultType="categoryvo">
+	<![CDATA[
+		SELECT * 
+		FROM (
+			SELECT c.CATENO AS cateNo, c.CATENAME  AS cateName, c.DESCRIPTION  AS description, countPost
+			FROM CATEGORY c,
+				(SELECT c.CATENO ,count(p.POSTTITLE) AS countPost
+				 FROM CATEGORY c
+				 LEFT JOIN POST p ON p.CATENO = c.CATENO
+				 GROUP BY c.CATENO
+			)T
+			WHERE c.USERNO = #{userNo} and c.CATENO = T.CATENO 
+		)TT
+		ORDER BY rownum DESC
+	]]>
+	</select>
+	
+	<!-- 카테고리 리스트 추가 -->
+	<insert id="addCate" parameterType="categoryvo">
+	<![CDATA[
+		INSERT INTO CATEGORY (cateNo, userNo, cateName, description, regDate)
+		VALUES(seq_category_no.nextval, #{userNo}, #{cateName}, #{description}, sysdate)
+	]]>
+	</insert>
+	
+	<!-- 선택한 카테고리의 포스트 수를 가져오기 -->
+	<select id="getCountPost" parameterType="_int" resultType="categoryvo">
+	<![CDATA[
+		SELECT countPost
+		FROM CATEGORY c,
+			(SELECT c.CATENO ,count(p.POSTTITLE) AS countPost
+			 FROM CATEGORY c
+			 LEFT JOIN POST p ON p.CATENO = c.CATENO
+			 GROUP BY c.CATENO
+		)T
+		WHERE c.USERNO = #{userNo} AND c.CATENO = #{cateNo} and c.CATENO = T.CATENO
+	]]>
+	</select>
+	
+	<!-- 선택한 카테고리 삭제 -->
+	<delete id="delete" parameterType="_int">
+		DELETE FROM CATEGORY
+		WHERE CATENO = #{cateNo}
+	</delete>
+	
+	<!-- 글작성 -->
+	<insert id="writePost" parameterType="postvo">
+	<![CDATA[
+		INSERT INTO post (postNo, cateNo, postTitle, postContent, regDate)
+		VALUES(seq_post_no.nextval, #{cateNo}, #{postTitle}, #{postContent}, sysdate)
+	]]>
+	</insert>
+ 
+</mapper>
